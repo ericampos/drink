@@ -62,5 +62,5 @@ class Contato {
 class Endereco {
     @NotBlank
     private String logradouro;
-    // outros campos
+
 }

@@ -10,7 +10,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue queuePedidosFabrica() {
-        return new Queue("pedidos-fabrica", true); // true = durable (survives restarts)
+        return new Queue("pedidos-fabrica", true);
     }
 
     @Bean
