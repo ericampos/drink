@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RevendaController {
 
-    private RevendaRepository repository;
+    private final RevendaRepository repository;
 
     @PostMapping
     public ResponseEntity<Revenda> criar(@Valid @RequestBody Revenda revenda) {

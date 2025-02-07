@@ -53,9 +53,9 @@
 
 		<!-- Banco de Dados -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.6.0</version> <!-- Use latest version -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

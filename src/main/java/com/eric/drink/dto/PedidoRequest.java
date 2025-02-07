@@ -1,7 +1,5 @@
 package com.eric.drink.dto;
 
-import com.eric.drink.models.Revenda;
-
 public class PedidoRequest {
 
     String cliente;

@@ -1,9 +1,7 @@
 package com.eric.drink.controller;
 
-import com.eric.drink.dto.PedidoRequest;
-import com.eric.drink.dto.PedidoResponse;
 import com.eric.drink.models.PedidoCliente;
-import com.eric.drink.service.PedidoClienteService;
+import com.eric.drink.repository.PedidoClienteRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/pedidos")
 @RequiredArgsConstructor
 public class PedidoController {
-    private final PedidoClienteService service;
+    private final PedidoClienteRepository repository;
 
     @PostMapping
-    public ResponseEntity<PedidoResponse> criar(@Valid @RequestBody PedidoRequest request) {
-        PedidoCliente pedido = service.criarPedido(request);
-        return ResponseEntity.ok(new PedidoResponse(pedido.getId(), pedido.getItens()));
+    public ResponseEntity<PedidoCliente> criar(@Valid @RequestBody PedidoCliente request) {
+
+        return ResponseEntity.ok(repository.save(request));
     }
 }

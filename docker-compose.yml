@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: revendas
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    healthcheck:  # <-- Added health check for PostgreSQL
+      test: ["CMD-SHELL", "pg_isready -U user -d revendas"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"   # AMQP port
+      - "15672:15672" # Management UI port
+    healthcheck:  # <-- Added health check for RabbitMQ
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/revendas
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      postgres:
+        condition: service_healthy  # <-- Wait for PostgreSQL to be healthy
+      rabbitmq:
+        condition: service_healthy  # <-- Wait for RabbitMQ to be healthy
